@@ -5,6 +5,7 @@ calcsA = json.load(open('col_calcs_A.json'))
 calcsB = json.load(open('col_calcs_B.json'))
 calcsC = json.load(open('col_calcs_C.json'))
 calcsD = json.load(open('col_calcs_D.json'))
+calcsE = json.load(open('col_calcs_E.json'))
 
 def check_order_holds(columnDependencyDict,keyOrdering):
     for currentCalcKey in keyOrdering:
@@ -55,7 +56,7 @@ def calc_column_dependencies(calculationList):
         for otherCalcKey in calculationList: 
             if (otherCalcKey in calculationList[currentCalcKey]) and (currentCalcKey != otherCalcKey): 
                 #the line below checks if there is a trailing backtick (i.e. is the ENTIRE column name present?)
-                if calculationList[currentCalcKey][calculationList[currentCalcKey].index(otherCalcKey)+ len(currentCalcKey)] =='`':
+                if calculationList[currentCalcKey][calculationList[currentCalcKey].index(otherCalcKey)+ len(otherCalcKey)] =='`':
                     refList.append(otherCalcKey)
                     columnDependencyDict[currentCalcKey] = refList            
         if currentCalcKey not in columnDependencyDict:
@@ -92,5 +93,11 @@ print(list(calcsD.keys()))
 print("\n NEW ORDERING BELOW \n")
 newOrderingCalcsD = key_ordering(calcsD)
 print("FINAL :  " + str(newOrderingCalcsD))
+
+print(list(calcsE.keys()))
+print("\n NEW ORDERING BELOW \n")
+newOrderingCalcsE = key_ordering(calcsE)
+print("FINAL :  " + str(newOrderingCalcsE))
+
 
 
