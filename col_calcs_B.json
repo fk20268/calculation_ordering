@@ -1,0 +1,8 @@
+{
+	"Incurred Claim": "`Total Incurred - Indemnity` + `Total Incurred - Fees`",
+	"Check Paid": "`Incurred Claim` - `Outstanding Claim` - `Paid this month - I + F` - `Previously Paid - I + F`",
+	"Outstanding Claim": "`Reserve - Indemnity` + `Reserve - Fees`",
+	"Paid this month - I + F": "`Paid this month - Indemnity` - `Paid this month - Fees`",
+	"Previously Paid - I + F": "`Previously Paid - Indemnity` - `Previously Paid - Fees`",
+	"Check Incurred": "`Total Incurred` - `Incurred Claim`"
+}

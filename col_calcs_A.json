@@ -1,0 +1,6 @@
+{
+	"Column D": "100 * `Column C`",
+	"Column C": "`Column A` + `Column B`"
+}
+
+
