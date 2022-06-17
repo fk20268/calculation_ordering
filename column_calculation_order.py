@@ -4,32 +4,27 @@ import json
 calcsA = json.load(open('col_calcs_A.json'))
 calcsB = json.load(open('col_calcs_B.json'))
 calcsC = json.load(open('col_calcs_C.json'))
+calcsD = json.load(open('col_calcs_D.json'))
 
 def check_order_holds(columnDependencyDict,keyOrdering):
     for currentCalcKey in keyOrdering:
         for otherCalcKey in keyOrdering:
             # if the other calculation depends on this calculation AND the index of the other calculation is larger => incorrect order 
             if (currentCalcKey in columnDependencyDict[otherCalcKey]) and (keyOrdering.index(currentCalcKey)> keyOrdering.index(otherCalcKey)):
-                """  # swapping the two erroneous indexes so the old and new ordering of keys is different -> triggers re-sort
+                 # swapping the two erroneous indexes so the old and new ordering of keys is different -> triggers re-sort
                 temp = keyOrdering[keyOrdering.index(currentCalcKey)]
                 keyOrdering[keyOrdering.index(currentCalcKey)] = keyOrdering[keyOrdering.index(otherCalcKey)]
                 keyOrdering[keyOrdering.index(otherCalcKey)] = temp
-                print("reordered " + str(keyOrdering))"""
-                index1 = keyOrdering.index(currentCalcKey)
-                index2 = index1 - 1
-                temp = keyOrdering[index1]
-                keyOrdering[index1] = keyOrdering[index2]
-                keyOrdering[index2] = temp
-                print("WHAT + " + str(keyOrdering) )
+                print("reordered " + str(keyOrdering))
     return keyOrdering
 
 #recursive function that checks if the key order has been changed since the last iteration. If it hasnt => sorted. otherwise recall
 def order_column_calculations(calculationList, columnDependencyDict, origKeyOrdering):
     newKeyOrdering = []
     for currentCalcKey in origKeyOrdering:
-        # if no backticks it can just be appended to the front as it relies on no other column
+        # if no backticks just insert it where it was in the previous ordering
         if "`" not in calculationList[currentCalcKey]:
-            newKeyOrdering.insert(0,currentCalcKey)
+            newKeyOrdering.insert(origKeyOrdering.index(currentCalcKey),currentCalcKey)
         else: 
             for columnDependency in columnDependencyDict[currentCalcKey]:
                 if (currentCalcKey in newKeyOrdering) and (columnDependency in newKeyOrdering):
@@ -54,7 +49,6 @@ def order_column_calculations(calculationList, columnDependencyDict, origKeyOrde
 def calc_column_dependencies(calculationList):
     newKeyOrdering = []
     columnDependencyDict = {}
-    
     for currentCalcKey in calculationList:
         newKeyOrdering.append(currentCalcKey)
         refList = []
@@ -79,10 +73,6 @@ def key_ordering(calculationList):
 
 
 
-newOrderingCalcsA = key_ordering(calcsA)
-newOrderingCalcsB = key_ordering(calcsB)
-
-
 print(list(calcsA.keys()))
 print("\n NEW ORDERING BELOW \n")
 newOrderingCalcsA = key_ordering(calcsA)
@@ -97,5 +87,10 @@ print(list(calcsC.keys()))
 print("\n NEW ORDERING BELOW \n")
 newOrderingCalcsC = key_ordering(calcsC)
 print("FINAL :  " + str(newOrderingCalcsC))
+
+print(list(calcsD.keys()))
+print("\n NEW ORDERING BELOW \n")
+newOrderingCalcsD = key_ordering(calcsD)
+print("FINAL :  " + str(newOrderingCalcsD))
 
 
